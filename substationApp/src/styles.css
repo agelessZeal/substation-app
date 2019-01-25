@@ -1,0 +1,110 @@
+/* You can add global styles to this file, and also import other style files */
+/**
+::ng2 Treeview custom style
+*/
+.tree .node-value {
+     margin-left: 5px;
+   }
+.node-name{
+  margin-left: 5px;
+}
+.tree .folding {
+  font-weight: normal !important;
+}
+
+tree>tree-internal>ul>li>div{
+  /*display: none !important;*/
+}
+.required:after { content:" *"; }
+.red { color: red}
+
+tree-internal .tree .node-value.node-selected {
+  background-color: #6589f391;
+}
+
+.sb-page-loading{
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: 10000;
+  top:0;
+  background-color:#ffffff ;
+  transition: background-color 3s linear;
+}
+.ngx-json-viewer{
+ overflow-y: auto !important;
+}
+.loader,
+.loader:after {
+  border-radius: 50%;
+  width: 10em;
+  height: 10em;
+}
+
+.loader {
+  margin: 42vh auto;
+  font-size: 10px;
+  position: relative;
+  text-indent: -9999em;
+  border-top: 1.1em solid rgba(37,37,37, 0.2);
+  border-right: 1.1em solid rgba(37,37,37, 0.2);
+  border-bottom: 1.1em solid rgba(37,37,37, 0.2);
+  border-left: 1.1em solid #252525;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation: load8 1.1s infinite linear;
+  animation: load8 1.1s infinite linear;
+}
+@-webkit-keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes fadein {
+  from {
+    opacity:0;
+  }
+  to {
+    opacity:1;
+  }
+}
+@-moz-keyframes fadein { /* Firefox */
+  from {
+    opacity:0;
+  }
+  to {
+    opacity:1;
+  }
+}
+@-webkit-keyframes fadein { /* Safari and Chrome */
+  from {
+    opacity:0;
+  }
+  to {
+    opacity:1;
+  }
+}
+@-o-keyframes fadein { /* Opera */
+  from {
+    opacity:0;
+  }
+  to {
+    opacity: 1;
+  }
+}

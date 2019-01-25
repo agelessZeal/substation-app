@@ -1,0 +1,22 @@
+ssh agelessming24@outlook.com@dev-smartservice.westeurope.cloudapp.azure.com
+C9JMP5L63
+https://microsoft.com/devicelogin
+docker run -p 8080:80 nginxdemos/hello
+========Graph API Structure========
+"data": {
+        "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
+        "displayName": "主成 严",
+        "surname": "主成",
+        "givenName": "严",
+        "id": "94f5998ac55f2fab",
+        "userPrincipalName": "agelessming24@outlook.com",
+        "businessPhones": [],
+        "jobTitle": null,
+        "mail": null,
+        "mobilePhone": null,
+        "officeLocation": null,
+        "preferredLanguage": null
+    }
+========Graph API Structure========
+//0000 00 00 00 00 00
+//0000 50 00 00 000

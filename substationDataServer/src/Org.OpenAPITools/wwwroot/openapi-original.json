@@ -1,0 +1,1808 @@
+{
+  "openapi" : "3.0.2",
+  "info" : {
+    "title" : "Public Substation API for the Smart Service Intelligent Autonomous Grid",
+    "description" : "Public API for registered users to access the device data, production data on a device, bay or substation base.",
+    "contact" : {
+      "name" : "Istvan Mudrak",
+      "url" : "https://www.smartservice.energy",
+      "email" : "istvan.mudrak@smartservice.energy"
+    },
+    "license" : {
+      "name" : "Proprietary",
+      "url" : "https://www.smartservice.energy/licenses/Substation"
+    },
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://api.smartservice.energy/substation/v1"
+  } ],
+  "tags" : [ {
+    "name" : "substation",
+    "description" : "Substations owned by an client"
+  }, {
+    "name" : "bay",
+    "description" : "Bays in a substation"
+  }, {
+    "name" : "device",
+    "description" : "Devices in a bay"
+  }, {
+    "name" : "measurements",
+    "description" : "DER measurement data"
+  } ],
+  "paths" : {
+    "/substations" : {
+      "get" : {
+        "tags" : [ "substation" ],
+        "operationId" : "findSubstationAll",
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "query",
+          "description" : "Id of client",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "List of all substations owned by a client. ClientId is proided after authorization. All the below GET requests are working on the same philosophy.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Substations"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Invalid status",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/substations/{substationId}" : {
+      "get" : {
+        "tags" : [ "substation" ],
+        "operationId" : "findSubstationBySubstationId",
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "query",
+          "description" : "Id of client",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "substationId",
+          "in" : "path",
+          "description" : "Id of a given substation",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Substation data idetified by {substationId}",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Substation"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Invalid status",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/substations/{substationId}/bays" : {
+      "get" : {
+        "tags" : [ "bay" ],
+        "operationId" : "findBayBySubstationId",
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "query",
+          "description" : "Id of client",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "substationId",
+          "in" : "path",
+          "description" : "Id of a given substation",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "All bay data idetified by {substationId}",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Bays"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Invalid status",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/substations/{substationId}/devices" : {
+      "get" : {
+        "tags" : [ "device" ],
+        "operationId" : "findDeviceBySubstationId",
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "query",
+          "description" : "Id of client",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "substationId",
+          "in" : "path",
+          "description" : "Id of a given substation",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "All device data idetified by {substationId}",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Devices"
+                  }
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Invalid status",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bays" : {
+      "get" : {
+        "tags" : [ "bay" ],
+        "operationId" : "findBayAll",
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "query",
+          "description" : "Id of client",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "List of all bays owned by a client",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Bays"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Invalid status",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bays/{bayId}" : {
+      "get" : {
+        "tags" : [ "bay" ],
+        "operationId" : "findBayByBayId",
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "query",
+          "description" : "Id of client",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "bayId",
+          "in" : "path",
+          "description" : "Id of a given bay",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Bay data idetified by {bayId}",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Bay"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Invalid status",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bays/{bayId}/devices" : {
+      "get" : {
+        "tags" : [ "device" ],
+        "operationId" : "findDeviceByBayId",
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "query",
+          "description" : "Id of client",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "bayId",
+          "in" : "path",
+          "description" : "Id of a given bay",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "All device data idetified by {bayId}",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Devices"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Invalid status",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/devices" : {
+      "get" : {
+        "tags" : [ "device" ],
+        "operationId" : "findDeviceAll",
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "query",
+          "description" : "Id of client",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "List of all device owned by a client",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Devices"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Invalid status",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/devices/{deviceId}" : {
+      "get" : {
+        "tags" : [ "device" ],
+        "operationId" : "findDeviceByDeviceId",
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "query",
+          "description" : "Id of client",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "deviceId",
+          "in" : "path",
+          "description" : "Id of a given device",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Device data idetified by {deviceId}",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Device"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Invalid status",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/measurements" : {
+      "get" : {
+        "tags" : [ "measurements" ],
+        "operationId" : "getMeasurementTypes",
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "query",
+          "description" : "Id of client",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Total list of different timeseries of a substation could produce for a client",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MeasurementTypes"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Invalid status",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/measurements/{measurementId}/actual/all" : {
+      "get" : {
+        "tags" : [ "measurements" ],
+        "operationId" : "getProductionAll",
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "query",
+          "description" : "Id of client",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "measurementId",
+          "in" : "path",
+          "description" : "Id of the series reported by the getMeasurementTypes",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Total actual production of substations owned by a client",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TimeSeries"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Invalid status",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/measurements/{measurementId}/actual/substation/{substationId}" : {
+      "get" : {
+        "tags" : [ "measurements" ],
+        "operationId" : "getProductionBySubstationId",
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "query",
+          "description" : "Id of client",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "measurementId",
+          "in" : "path",
+          "description" : "Id of the series reported by the getMeasurementTypes",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "substationId",
+          "in" : "path",
+          "description" : "Id of the substation",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Total actual production of a substation owned by a client",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TimeSeries"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Invalid status",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/measurements/{measurementId}/actual/bay/{bayId}" : {
+      "get" : {
+        "tags" : [ "measurements" ],
+        "operationId" : "getProductionByBayId",
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "query",
+          "description" : "Id of client",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "measurementId",
+          "in" : "path",
+          "description" : "Id of the series reported by the getMeasurementTypes",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "bayId",
+          "in" : "path",
+          "description" : "Id of a given bay",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Total actual production of a given bay",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TimeSeries"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Invalid status",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/measurements/{measurementId}/actual/device/{deviceId}" : {
+      "get" : {
+        "tags" : [ "measurements" ],
+        "operationId" : "getProductionByDeviceId",
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "query",
+          "description" : "Id of client",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "measurementId",
+          "in" : "path",
+          "description" : "Datacom Products, CR0M3GP4U, Electrical Transceiver",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "deviceId",
+          "in" : "path",
+          "description" : "Id of a given device",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Total actual production of a given device",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TimeSeries"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Invalid status",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/measurements/{measurementId}/historical/all" : {
+      "get" : {
+        "tags" : [ "measurements" ],
+        "operationId" : "getMeasurementAll",
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "query",
+          "description" : "Id of client",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "measurementId",
+          "in" : "path",
+          "description" : "Datacom Products, CR0M3GP4U, Electrical Transceiver",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "fromDate",
+          "in" : "query",
+          "description" : "Start date of the historical production data",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "toDate",
+          "in" : "query",
+          "description" : "End date of the historical production data, when not provided the end date is the current date",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Total historical production of substations owned by a client",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TimeSeries"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Invalid status",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/measurements/{measurementId}/historical/substation/{substationId}" : {
+      "get" : {
+        "tags" : [ "measurements" ],
+        "operationId" : "getMeasurementsBySubstationId",
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "query",
+          "description" : "Id of client",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "measurementId",
+          "in" : "path",
+          "description" : "Id of the series reported by the getMeasurementTypes",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "substationId",
+          "in" : "path",
+          "description" : "Id of a given substation",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "fromDate",
+          "in" : "query",
+          "description" : "Start date of the historical production data",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "toDate",
+          "in" : "query",
+          "description" : "End date of the historical production data, when not provided the end date is the current date",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Total historical production of the substations owned by a client",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TimeSeries"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Invalid status",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/measurements/{measurementId}/historical/bay/{bayId}" : {
+      "get" : {
+        "tags" : [ "measurements" ],
+        "operationId" : "getMeasurementsByBayId",
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "query",
+          "description" : "Id of client",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "measurementId",
+          "in" : "path",
+          "description" : "Id of the series reported by the getMeasurementTypes",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "bayId",
+          "in" : "path",
+          "description" : "Id of a given bay",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "fromDate",
+          "in" : "query",
+          "description" : "Start date of the historical production data",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "toDate",
+          "in" : "query",
+          "description" : "End date of the historical production data, when not provided the end date is the current date",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Total historical production of a given bay",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TimeSeries"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Invalid status",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/measurements/{measurementId}/historical/device/{deviceId}" : {
+      "get" : {
+        "tags" : [ "measurements" ],
+        "operationId" : "getMeasurementsByDeviceId",
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "query",
+          "description" : "Id of client",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "measurementId",
+          "in" : "path",
+          "description" : "Id of the series reported by the getMeasurementTypes",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "deviceId",
+          "in" : "path",
+          "description" : "Id of a given device",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "fromDate",
+          "in" : "query",
+          "description" : "Start date of the historical production data",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "toDate",
+          "in" : "query",
+          "description" : "End date of the historical production data, when not provided the end date is the current date",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Total historical production of a given device",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TimeSeries"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Invalid status",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/meterings" : {
+      "get" : {
+        "tags" : [ "measurements" ],
+        "operationId" : "getMeteringTypes",
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "query",
+          "description" : "Id of client",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Total list of different meterings (aggregate or calculated measurements) of a substation could produce for a client",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MeteringTypes"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Invalid status",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/meterings/{meteringId}/all" : {
+      "get" : {
+        "tags" : [ "measurements" ],
+        "operationId" : "getMeteringAll",
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "query",
+          "description" : "Id of client",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "meteringId",
+          "in" : "path",
+          "description" : "Id of the series reported by the getMeteringTypes",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "numberOf",
+          "in" : "query",
+          "description" : "Count of the equidistant data points",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "timeSpan",
+          "in" : "query",
+          "description" : "Size of the equidistant time frame",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "startDate",
+          "in" : "query",
+          "description" : "Start date of the metering data",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "endDate",
+          "in" : "query",
+          "description" : "End date of the historical production data, when not provided the end date is the current date",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Total historical production of a given device",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TimeSeries"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Invalid status",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/meterings/{meteringId}/substation/{substationId}" : {
+      "get" : {
+        "tags" : [ "measurements" ],
+        "operationId" : "getMeteringBySubstationId",
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "query",
+          "description" : "Id of client",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "meteringId",
+          "in" : "path",
+          "description" : "Id of the series reported by the getMeteringTypes",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "substationId",
+          "in" : "path",
+          "description" : "Id of a given series",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "numberOf",
+          "in" : "query",
+          "description" : "Count of the equidistant data points",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "timeSpan",
+          "in" : "query",
+          "description" : "Size of the equidistant time frame",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "startDate",
+          "in" : "query",
+          "description" : "Start date of the metering data",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "endDate",
+          "in" : "query",
+          "description" : "End date of the historical production data, when not provided the end date is the current date",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Total historical production of a given device",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TimeSeries"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Invalid status",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/meterings/{meteringId}/bay/{bayId}" : {
+      "get" : {
+        "tags" : [ "measurements" ],
+        "operationId" : "getMeteringByBayId",
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "query",
+          "description" : "Id of client",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "meteringId",
+          "in" : "path",
+          "description" : "Id of the series reported by the getMeteringTypes",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "bayId",
+          "in" : "path",
+          "description" : "Id of a given bay",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "numberOf",
+          "in" : "query",
+          "description" : "Count of the equidistant data points",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "timeSpan",
+          "in" : "query",
+          "description" : "Size of the equidistant time frame",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "startDate",
+          "in" : "query",
+          "description" : "Start date of the metering data",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "endDate",
+          "in" : "query",
+          "description" : "End date of the metering data, when not provided the end date is the current date",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Total historical production of a given device",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TimeSeries"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Invalid status",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/meterings/{meteringId}/device/{deviceId}" : {
+      "get" : {
+        "tags" : [ "measurements" ],
+        "operationId" : "getMeteringByDeviceId",
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "query",
+          "description" : "Id of client",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "meteringId",
+          "in" : "path",
+          "description" : "Id of the series reported by the getMeteringTypes",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "deviceId",
+          "in" : "path",
+          "description" : "Id of a given series",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "numberOf",
+          "in" : "query",
+          "description" : "Count of the equidistant data points",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "timeSpan",
+          "in" : "query",
+          "description" : "Size of the equidistant time frame",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "startDate",
+          "in" : "query",
+          "description" : "Start date of the historical production data",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "endDate",
+          "in" : "query",
+          "description" : "End date of the historical production data, when not provided the end date is the current date",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Total historical production of a given device",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TimeSeries"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Invalid status",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Error" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string"
+          },
+          "text" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Location" : {
+        "type" : "object",
+        "properties" : {
+          "latitude" : {
+            "type" : "number",
+            "format" : "float"
+          },
+          "longitude" : {
+            "type" : "number",
+            "format" : "float"
+          },
+          "altitude" : {
+            "type" : "number",
+            "format" : "float"
+          }
+        },
+        "example" : {
+          "altitude" : 1.4658129,
+          "latitude" : 0.8008282,
+          "longitude" : 6.0274563
+        }
+      },
+      "Address" : {
+        "type" : "object",
+        "properties" : {
+          "number" : {
+            "type" : "string"
+          },
+          "street" : {
+            "type" : "string"
+          },
+          "city" : {
+            "type" : "string"
+          },
+          "locality" : {
+            "type" : "string"
+          },
+          "zip" : {
+            "type" : "string"
+          },
+          "country" : {
+            "type" : "string"
+          }
+        },
+        "example" : {
+          "zip" : "zip",
+          "number" : "number",
+          "country" : "country",
+          "city" : "city",
+          "street" : "street",
+          "locality" : "locality"
+        }
+      },
+      "Contact" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "phone" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          }
+        },
+        "example" : {
+          "phone" : "phone",
+          "name" : "name",
+          "email" : "email"
+        }
+      },
+      "Substation" : {
+        "type" : "object",
+        "properties" : {
+          "mrid" : {
+            "type" : "string"
+          },
+          "location" : {
+            "$ref" : "#/components/schemas/Location"
+          },
+          "contact" : {
+            "$ref" : "#/components/schemas/Contact"
+          },
+          "address" : {
+            "$ref" : "#/components/schemas/Address"
+          },
+          "description" : {
+            "type" : "string"
+          }
+        },
+        "example" : {
+          "mrid" : "mrid",
+          "address" : {
+            "zip" : "zip",
+            "number" : "number",
+            "country" : "country",
+            "city" : "city",
+            "street" : "street",
+            "locality" : "locality"
+          },
+          "contact" : {
+            "phone" : "phone",
+            "name" : "name",
+            "email" : "email"
+          },
+          "description" : "description",
+          "location" : {
+            "altitude" : 1.4658129,
+            "latitude" : 0.8008282,
+            "longitude" : 6.0274563
+          }
+        }
+      },
+      "Substations" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/Substation"
+        }
+      },
+      "Bay" : {
+        "type" : "object",
+        "properties" : {
+          "mrid" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "location" : {
+            "$ref" : "#/components/schemas/Location"
+          },
+          "description" : {
+            "type" : "string"
+          }
+        },
+        "example" : {
+          "mrid" : "mrid",
+          "name" : "name",
+          "description" : "description",
+          "location" : {
+            "altitude" : 1.4658129,
+            "latitude" : 0.8008282,
+            "longitude" : 6.0274563
+          }
+        }
+      },
+      "Bays" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/Bay"
+        }
+      },
+      "DeviceType" : {
+        "type" : "object",
+        "properties" : {
+          "vendor" : {
+            "type" : "string"
+          },
+          "hwRev" : {
+            "type" : "string"
+          },
+          "swRev" : {
+            "type" : "string"
+          },
+          "serNum" : {
+            "type" : "string"
+          },
+          "model" : {
+            "type" : "string"
+          },
+          "owner" : {
+            "type" : "string"
+          },
+          "primeOps" : {
+            "type" : "string"
+          },
+          "secondOps" : {
+            "type" : "string"
+          }
+        },
+        "description" : "Based on the IEC61850 DPL Common Data Class",
+        "example" : {
+          "owner" : "owner",
+          "hwRev" : "hwRev",
+          "swRev" : "swRev",
+          "vendor" : "vendor",
+          "primeOps" : "primeOps",
+          "serNum" : "serNum",
+          "model" : "model",
+          "secondOps" : "secondOps"
+        }
+      },
+      "Device" : {
+        "type" : "object",
+        "properties" : {
+          "mrid" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "type" : {
+            "$ref" : "#/components/schemas/DeviceType"
+          },
+          "location" : {
+            "$ref" : "#/components/schemas/Location"
+          },
+          "description" : {
+            "type" : "string"
+          }
+        },
+        "example" : {
+          "mrid" : "mrid",
+          "name" : "name",
+          "description" : "description",
+          "location" : {
+            "altitude" : 1.4658129,
+            "latitude" : 0.8008282,
+            "longitude" : 6.0274563
+          },
+          "type" : {
+            "owner" : "owner",
+            "hwRev" : "hwRev",
+            "swRev" : "swRev",
+            "vendor" : "vendor",
+            "primeOps" : "primeOps",
+            "serNum" : "serNum",
+            "model" : "model",
+            "secondOps" : "secondOps"
+          }
+        }
+      },
+      "Devices" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/Device"
+        }
+      },
+      "MeasurementType" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "unit" : {
+            "type" : "string"
+          },
+          "multiplier" : {
+            "type" : "string"
+          }
+        },
+        "example" : {
+          "unit" : "unit",
+          "multiplier" : "multiplier",
+          "name" : "name",
+          "description" : "description",
+          "id" : "id"
+        }
+      },
+      "MeasurementTypes" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/MeasurementType"
+        }
+      },
+      "MeteringTypes" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/MeasurementType"
+        }
+      },
+      "TimeSeriesElement" : {
+        "properties" : {
+          "date" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "value" : {
+            "type" : "number"
+          }
+        },
+        "example" : {
+          "date" : "2000-01-23T04:56:07.000+00:00",
+          "value" : 0.80082819046101150206595775671303272247314453125
+        }
+      },
+      "TimeSeries" : {
+        "type" : "object",
+        "properties" : {
+          "typeid" : {
+            "type" : "string"
+          },
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/TimeSeriesElement"
+            }
+          }
+        },
+        "example" : {
+          "data" : [ {
+            "date" : "2000-01-23T04:56:07.000+00:00",
+            "value" : 0.80082819046101150206595775671303272247314453125
+          }, {
+            "date" : "2000-01-23T04:56:07.000+00:00",
+            "value" : 0.80082819046101150206595775671303272247314453125
+          } ],
+          "typeid" : "typeid"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "smartservice_auth" : {
+        "type" : "oauth2",
+        "flows" : {
+          "authorizationCode" : {
+            "authorizationUrl" : "https://login.microsoftonline.com/f3b28f26-6d10-4522-ab26-3141516cbb1a/oauth2/authorize",
+            "tokenUrl" : "https://login.microsoftonline.com/f3b28f26-6d10-4522-ab26-3141516cbb1a/oauth2/token"
+          }
+        }
+      }
+    }
+  }
+}

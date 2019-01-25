@@ -1,0 +1,9 @@
+<div class="device-tree-wrapper">
+  <tree
+    [tree]="tree"
+    (nodeSelected)="onDevItemClick($event)" #treeComponent>
+  </tree>
+  <div class="tree-waiting" *ngIf="!devTreeLoaded">
+    <div class="loader"></div>
+  </div>
+</div>

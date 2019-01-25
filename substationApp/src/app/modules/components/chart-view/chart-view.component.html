@@ -1,0 +1,124 @@
+<div class="chart-view-wrapper">
+  <div class="row">
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="form-group">
+        <label for="series-type">Series Types : </label>
+        <select class="form-control" name="series-type" id="series-type"  (change)="onSelectSeries($event.target.value)">
+          <option *ngFor="let seriesType of seriesTypes" [value]="seriesType">{{seriesType}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12"   *ngIf="curSeriesType !== 'Metering'">
+      <div class="form-group">
+        <label for="ms-type" id="ms-label">Measurement Types : </label>
+        <select class="form-control" name="ms-type" id="ms-type" (change)="onSelectMSType($event.target.value)">
+          <option *ngFor="let msitem of msTypes" [value]="msitem.id">{{msitem.description}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12" *ngIf="curSeriesType == 'Metering'">
+      <div class="form-group">
+        <label for="ms-type">Meterings : </label>
+        <select class="form-control" name="metering-type" id="metering-type" (change)="onSelectMetering($event.target.value)">
+          <option *ngFor="let metering of meterings" [value]="metering.id">{{metering.description}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 col-sm-12 col-xs-12"  *ngIf="curSeriesType == 'History'">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="ms-type">From Date : </label>
+            <input placeholder="Date Time:" class="form-control" [min]="minDate"
+                   [(ngModel)]="fromDate" (ngModelChange)="onChangeFromDate($event)"
+                   [owlDateTimeTrigger]="fromdt" [owlDateTime]="fromdt">
+            <owl-date-time #fromdt></owl-date-time>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="ms-type">To Date : </label>
+            <input placeholder="Date Time:" class="form-control"
+                   [(ngModel)]="toDate" (ngModelChange)="onChangeToDate($event)"
+                   [owlDateTimeTrigger]="todt" [owlDateTime]="todt">
+            <owl-date-time #todt></owl-date-time>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12 col-sm-12 col-xs-12"  *ngIf="curSeriesType == 'Metering'">
+      <div class="row">
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="numberOf">Number Of <span class="red">*</span> : </label>
+            <div class="input-group mb-3">
+              <input class="form-control" id="numberOf"
+                     [(ngModel)] = "numberOf" (ngModelChange)="onChangeNumberOf($event)"
+                     name="numberOf" type="number" step="1">
+              <div class="input-group-append" (click)="onSelectNumberOf()" id="numberOf-set-btn">
+                <span class="input-group-text">SET</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="ms-type">Time Span <span class="red">*</span> : </label>
+            <div class="time-span-group" [ngClass]="{'invalid-form-elem-1':!isTimeSpanValid}">
+              <input class="form-control" type="text"
+                     [value]="tsDay"
+                     (input)="onChangeTimeSpanDay($event)"
+                     placeholder="DDDD" id="ts-group-day">
+              <span>:</span>
+              <input class="form-control" type="text"
+                     [value]="tsHour"
+                     (input)="onChangeTimeSpanHour($event)"
+                     placeholder="hh" id="ts-group-hour">
+              <span>:</span>
+              <input class="form-control" type="text"
+                     [value]="tsMin"
+                     (input)="onChangeTimeSpanMin($event)"
+                     placeholder="mm" id="ts-group-minute">
+              <span>:</span>
+              <input class="form-control" type="text"
+                     [value]="tsSecond"
+                     (input)="onChangeTimeSpanSecond($event)"
+                     placeholder="ss" id="ts-group-seconds">
+              <button type="button" class="btn btn-primary" (click)="onSelectTimeSpan()">SET</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="ms-type">Start Date : </label>
+            <input placeholder="Date Time:" class="form-control"
+                   [(ngModel)]="startDate" (ngModelChange)="onChangeStartDate($event)"
+                   [owlDateTimeTrigger]="startdt" [owlDateTime]="startdt">
+            <owl-date-time #startdt></owl-date-time>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="ms-type">End Date : </label>
+            <input placeholder="Date Time:" class="form-control"
+                   [(ngModel)]="endDate" (ngModelChange)="onChangeEndDate($event)"
+                   [owlDateTimeTrigger]="enddt" [owlDateTime]="enddt">
+            <owl-date-time #enddt></owl-date-time>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="chart-area" [ngStyle]="{'height':(curSeriesType == 'Actual')? '77vh':'68vh'}">
+        <div class="data-load-waiting" *ngIf="!chatDataLoaded">
+          <div class="loader"></div>
+        </div>
+        <ngx-json-viewer [json]="jsonData"></ngx-json-viewer>
+      </div>
+    </div>
+  </div>
+</div>

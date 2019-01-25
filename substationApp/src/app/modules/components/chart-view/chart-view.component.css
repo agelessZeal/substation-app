@@ -1,0 +1,64 @@
+.chart-view-wrapper{
+  padding: 10px;
+}
+
+#ms-label{
+  border: none;
+}
+
+.chart-area{
+  height: 82vh;
+  background-color: #eaeaeac9;
+  position: relative;
+}
+
+#time-span-set-btn{
+  cursor: pointer;
+}
+.time-span-group .form-control{
+  display: inline-block;
+  padding: .375rem .25rem;
+}
+.time-span-group button{
+  width: 13%;
+  margin-left: 5px;
+  vertical-align: inherit !important;
+
+}
+.time-span-group span{
+  padding: 0.1rem;
+}
+#ts-group-day {
+  width: 20%;
+}
+#ts-group-hour {
+  width: 10%;
+}
+#ts-group-minute {
+  width: 10%;
+}
+#ts-group-seconds {
+  width: 10%;
+}
+.invalid-form-elem{
+  border: 1px solid red;
+}
+#numberOf-set-btn{
+  cursor: pointer;
+}
+.data-load-waiting{
+  position: absolute;
+  z-index: 300;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: #e2e2e6fc;
+  border: 1px solid black;
+}
+.data-load-waiting .loader{
+  width: 50px;
+  height: 50px;
+  border-width: 6px;
+  margin: 30vh auto !important;
+}

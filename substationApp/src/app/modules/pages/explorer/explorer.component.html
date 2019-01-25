@@ -1,0 +1,15 @@
+<div class="sb-main-explorer">
+  <div class="row">
+    <div class="col-lg-4 col-md-12 col-sm-12">
+      <div class="sb-dev-tree">
+        <app-device-tree [accToken]="accessToken" *ngIf="(accessToken!='')"></app-device-tree>
+      </div>
+    </div>
+    <div class="col-lg-8 col-md-12 col-sm-12">
+      <div class="sb-dev-chart">
+        <app-chart-view [accToken]="accessToken" *ngIf="(accessToken!='')"></app-chart-view>
+      </div>
+    </div>
+  </div>
+</div>
+
