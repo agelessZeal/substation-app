@@ -12,8 +12,8 @@ export const environment = {
 
     // Online Mode
     // clientID: 'abe2a66f-24fd-48db-8951-ad9cf48ea0e2',
-    // redirectUri: 'http://localhost:4200/',
-    // postLogoutRedirectUri: 'http://localhost:4200/logout',
+    // redirectUri: 'https://dev-smartservice.westeurope.cloudapp.azure.com:8080/',
+    // postLogoutRedirectUri: 'https://dev-smartservice.westeurope.cloudapp.azure.com:8080/logout',
 
     consentScopes: 'api://a88bb933-319c-41b5-9f04-eff36d985612/access_as_user'
   },
@@ -26,7 +26,8 @@ export const environment = {
     // Local Mode
     serverBaseURL: 'http://127.0.0.1:3000',
     // Online Mode
-    // serverBaseURL: 'http://127.0.0.1:3000',
+    // serverBaseURL: 'http://127.0.0.1:8080/',
+    // serverBaseURL: 'http://dev-smartservice.westeurope.cloudapp.azure.com:8081/',
   }
 };
 
